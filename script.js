@@ -1,8 +1,6 @@
 let userPrefs = {
   name: "—",
-  dislikes: [],
-  preferredTemp: 0,
-  month: null
+  preferredTemp: 0
 };
 
 function showToast(message = "Preferences saved!") {
@@ -18,27 +16,11 @@ document.getElementById("preferences-form").addEventListener("submit", function 
   e.preventDefault();
 
   const name = document.getElementById("name").value.trim();
-  const dislikes = document.getElementById("dislikes").value.trim().split(",").map(item => item.trim().toLowerCase());
   const preferredTemp = parseInt(document.getElementById("preferredTemp").value);
-  const preferredMonth = parseInt(document.getElementById("preferredMonth").value);
 
-  userPrefs = { name, dislikes, preferredTemp, month: preferredMonth };
-  showUserPreferences(userPrefs);
-
+  userPrefs = { name, preferredTemp };
   showToast("Preferences saved!");
 });
-
-function showUserPreferences(prefs) {
-  document.getElementById("pref-name").textContent = prefs.name;
-  document.getElementById("pref-dislikes").textContent = prefs.dislikes.join(", ");
-  document.getElementById("pref-temp").textContent = prefs.preferredTemp;
-  document.getElementById("pref-month").textContent = prefs.month ? getMonthName(prefs.month) : "—";
-}
-
-function getMonthName(monthNumber) {
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return monthNames[monthNumber - 1] || "—";
-}
 
 function checkWeather() {
   const city = document.getElementById("cityInput").value;
@@ -77,14 +59,12 @@ function checkWeather() {
 }
 
 function generateFakeNotification(userPrefs, weatherData) {
-  const { name, dislikes, preferredTemp } = userPrefs;
+  const { name, preferredTemp } = userPrefs;
   const { description, temp } = weatherData;
 
   let message = `Hey ${name || "there"}! It's ${description} and ${temp}°C. `;
 
-  if (dislikes.includes("rain") && description.includes("rain")) {
-    message += "You dislike rain – don’t forget an umbrella ☔.";
-  } else if (dislikes.includes("cold") && temp < preferredTemp) {
+  if (temp < preferredTemp) {
     message += "It’s colder than you like – wear something warm! 🧥";
   } else if (temp > preferredTemp + 5) {
     message += "It’s hotter than your preference – stay hydrated! 🥤";
