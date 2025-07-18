@@ -1,5 +1,4 @@
 let userPrefs = {
-  name: "—",
   preferredTemp: 0
 };
 
@@ -15,10 +14,9 @@ function showToast(message = "Preferences saved!") {
 document.getElementById("preferences-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
   const preferredTemp = parseInt(document.getElementById("preferredTemp").value);
 
-  userPrefs = { name, preferredTemp };
+  userPrefs = { preferredTemp };
   showToast("Preferences saved!");
 });
 
@@ -59,10 +57,10 @@ function checkWeather() {
 }
 
 function generateFakeNotification(userPrefs, weatherData) {
-  const { name, preferredTemp } = userPrefs;
+  const { preferredTemp } = userPrefs;
   const { description, temp } = weatherData;
 
-  let message = `Hey ${name || "there"}! It's ${description} and ${temp}°C. `;
+  let message = `Current weather: ${description} and ${temp}°C. `;
 
   if (temp < preferredTemp) {
     message += "It’s colder than you like – wear something warm! 🧥";
