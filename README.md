@@ -1,3 +1,3 @@
 # weatherlyIndia
 # checkout
-[link]( https://aftab-0480.github.io/weatherlyIndia/)
+[Check weather]( https://aftab-0480.github.io/weatherlyIndia/)
